@@ -1,0 +1,1862 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreMium Testing Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1a56db;
+            --secondary-blue: #0ea5e9;
+            --dark-blue: #1e3a8a;
+            --light-blue: #dbeafe;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --gradient-blue: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            --gradient-green: linear-gradient(135deg, var(--accent-green), #34d399);
+            --gradient-orange: linear-gradient(135deg, var(--accent-orange), #f97316);
+            --gradient-red: linear-gradient(135deg, var(--accent-red), #f87171);
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 3px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: #1e3a8a;
+            font-size: 11px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2px;
+        }
+
+        .logo p {
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .page {
+            background: white;
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            display: none;
+            position: relative;
+        }
+
+        .active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sign In Page with Promo */
+        .signin-promo {
+            background: linear-gradient(135deg, #1e3a8a, #1a56db);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .signin-promo h2 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #ffd700;
+        }
+
+        .signin-promo p {
+            font-size: 0.6rem;
+            line-height: 1.4;
+            text-align: justify;
+        }
+
+        .password-container {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 7px 9px 7px 26px;
+            border: 1.5px solid var(--light-blue);
+            border-radius: 5px;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.15);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 9px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-blue);
+            font-size: 0.7rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(26, 86, 219, 0.2);
+        }
+
+        .btn-contact {
+            background: linear-gradient(135deg, var(--accent-green), #22c55e);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(37, 211, 102, 0.2);
+        }
+
+        .contact-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 5px;
+            margin-top: 12px;
+        }
+
+        .compact-contact-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 4px;
+            margin: 8px 0;
+        }
+
+        .compact-contact-buttons .btn {
+            padding: 4px 6px;
+            font-size: 0.65rem;
+        }
+
+        .error-box {
+            background: #fee2e2;
+            color: var(--accent-red);
+            padding: 5px 7px;
+            border-radius: 3px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        /* Registration Page */
+        .form-group {
+            margin-bottom: 8px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 600;
+            color: var(--dark-blue);
+            font-size: 0.7rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 6px 9px;
+            border: 1.5px solid var(--light-blue);
+            border-radius: 5px;
+            font-size: 0.7rem;
+            background: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.15);
+        }
+
+        /* Quiz Page */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid var(--light-blue);
+        }
+
+        .timer-container {
+            display: flex;
+            gap: 6px;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+
+        .timer {
+            background: var(--gradient-blue);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            box-shadow: var(--shadow);
+            white-space: nowrap;
+        }
+
+        .question-timer {
+            background: var(--gradient-orange);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            box-shadow: var(--shadow);
+            white-space: nowrap;
+        }
+
+        .quiz-title-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            width: 80%;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.7rem;
+            color: var(--dark-blue);
+            font-weight: 600;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.4s ease;
+            background: var(--gradient-blue);
+        }
+
+        .question-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(14px, 1fr));
+            gap: 3px;
+            margin-bottom: 8px;
+        }
+
+        .question-nav-item {
+            width: 14px;
+            height: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 0.5rem;
+            cursor: pointer;
+            background: white;
+            border: 1.5px solid var(--light-blue);
+            transition: all 0.2s;
+        }
+
+        .question-nav-item.current {
+            background: var(--gradient-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .question-nav-item.answered {
+            background: var(--gradient-green);
+            color: white;
+            border-color: var(--accent-green);
+        }
+
+        .question-nav-item.visited {
+            background: var(--gradient-orange);
+            color: white;
+            border-color: var(--accent-orange);
+        }
+
+        .question-nav-item.out-of-syllabus {
+            background: var(--gradient-red);
+            color: white;
+            border-color: var(--accent-red);
+        }
+
+        .question-container {
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--dark-blue);
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+
+        .option {
+            padding: 5px 8px;
+            border: 1.5px solid var(--light-blue);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            background: #f8fafc;
+            font-size: 0.7rem;
+        }
+
+        .option:hover {
+            border-color: var(--primary-blue);
+            background: #e0f2fe;
+        }
+
+        .option.selected {
+            border-color: var(--primary-blue);
+            background: #dbeafe;
+        }
+
+        .option.correct {
+            border-color: var(--accent-green);
+            background: #d1fae5;
+        }
+
+        .option.incorrect {
+            border-color: var(--accent-red);
+            background: #fee2e2;
+        }
+
+        .reasoning {
+            background: #f8fafc;
+            border-radius: 5px;
+            padding: 8px;
+            margin-top: 8px;
+            display: none;
+            border-left: 3px solid var(--primary-blue);
+            font-size: 0.7rem;
+        }
+
+        .reasoning-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--dark-blue);
+            font-size: 0.75rem;
+        }
+
+        .navigation-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+            margin-top: 12px;
+        }
+
+        .nav-btn {
+            padding: 5px 7px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: white;
+        }
+
+        .btn-skip {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+        }
+
+        .btn-reasoning {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: white;
+        }
+
+        .btn-out-of-syllabus {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            color: white;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+        }
+
+        /* Results Page */
+        .result-card {
+            background: linear-gradient(135deg, #f8fafc, #e0f2fe);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .score-display {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin: 6px 0;
+        }
+
+        /* NEW Professional DMC Report Styling */
+        .dmc-report {
+            background: white;
+            border: 2px solid #1e3a8a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .dmc-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(30, 58, 138, 0.1);
+            z-index: 0;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+
+        .dmc-header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dmc-header h2 {
+            color: #1e3a8a;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .dmc-header p {
+            color: #1a56db;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .dmc-issuance {
+            text-align: center;
+            margin-bottom: 10px;
+            font-style: italic;
+            color: #4b5563;
+            font-size: 0.7rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dmc-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dmc-section {
+            margin-bottom: 12px;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #1e3a8a;
+        }
+
+        .dmc-section h3 {
+            color: #1e3a8a;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #dbeafe;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .dmc-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-size: 0.7rem;
+        }
+
+        .dmc-label {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .dmc-value {
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .dmc-grading {
+            margin-top: 15px;
+            border-top: 2px solid #1e3a8a;
+            padding-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dmc-grading h3 {
+            text-align: center;
+            color: #1e3a8a;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .dmc-grades {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+
+        .dmc-grade-item {
+            padding: 8px 4px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #f8fafc, #e0f2fe);
+            box-shadow: var(--shadow);
+        }
+
+        .dmc-grade-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 2px;
+        }
+
+        .dmc-grade-label {
+            font-size: 0.6rem;
+            color: #1e3a8a;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .dmc-performance {
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dmc-performance h3 {
+            text-align: center;
+            color: #1e3a8a;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .dmc-performance-bars {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+
+        .dmc-performance-item {
+            padding: 6px 4px;
+            border-radius: 5px;
+        }
+
+        .dmc-performance-correct {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 1px solid #10b981;
+        }
+
+        .dmc-performance-incorrect {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 1px solid #ef4444;
+        }
+
+        .dmc-performance-unanswered {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+        }
+
+        .dmc-performance-oos {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            border: 1px solid #6b7280;
+        }
+
+        .dmc-performance-value {
+            font-size: 0.9rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .dmc-performance-correct .dmc-performance-value {
+            color: #065f46;
+        }
+
+        .dmc-performance-incorrect .dmc-performance-value {
+            color: #991b1b;
+        }
+
+        .dmc-performance-unanswered .dmc-performance-value {
+            color: #92400e;
+        }
+
+        .dmc-performance-oos .dmc-performance-value {
+            color: #374151;
+        }
+
+        .dmc-performance-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .dmc-footer {
+            margin-top: 15px;
+            text-align: center;
+            border-top: 1px solid #dbeafe;
+            padding-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dmc-footer p {
+            font-size: 0.7rem;
+            color: #4b5563;
+            line-height: 1.4;
+        }
+
+        .dmc-excellence {
+            margin-top: 12px;
+            padding: 8px;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border-radius: 5px;
+            border-left: 3px solid #f59e0b;
+            text-align: center;
+            display: none;
+        }
+
+        .dmc-excellence p {
+            font-size: 0.75rem;
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body, .container {
+                background: white !important;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .page {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 5px;
+            }
+            
+            .logo, .contact-buttons, .compact-contact-buttons, 
+            .navigation-buttons, .result-actions, .nav-btn, .btn,
+            .timer, .question-timer, .question-nav, .progress-container {
+                display: none !important;
+            }
+            
+            .dmc-report {
+                border: 1px solid #000;
+                page-break-before: always;
+                box-shadow: none;
+                margin: 0;
+                padding: 15px;
+            }
+            
+            .result-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+            }
+            
+            .score-display {
+                color: #000 !important;
+            }
+            
+            .dmc-watermark {
+                color: rgba(0, 0, 0, 0.05) !important;
+            }
+        }
+
+        /* NEW Smaller Hamburger Menu */
+        .hamburger-menu {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 24px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4px;
+            cursor: pointer;
+            z-index: 1000;
+            border-radius: 4px;
+            background: rgba(26, 86, 219, 0.7);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-menu.active-menu span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger-menu.active-menu span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active-menu span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+            display: none;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .menu-overlay.active-menu {
+            display: block;
+            opacity: 1;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 0;
+            left: -80%;
+            width: 80%;
+            max-width: 300px;
+            height: 100%;
+            background: linear-gradient(135deg, #1e3a8a, #1a56db);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            transition: left 0.3s ease;
+            z-index: 999;
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-container.active-menu {
+            left: 0;
+        }
+
+        .menu-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .menu-header h2 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .menu-header p {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .menu-list {
+            list-style: none;
+            width: 100%;
+        }
+
+        .menu-list li {
+            margin-bottom: 10px;
+        }
+
+        .menu-list a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-list a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(4px);
+        }
+
+        .menu-list i {
+            font-size: 0.9rem;
+        }
+
+        .menu-list span {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .menu-contact {
+            width: 100%;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-contact a {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            font-size: 0.7rem;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .menu-contact a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .quiz-header {
+                flex-direction: column;
+                gap: 6px;
+                align-items: flex-start;
+            }
+            
+            .navigation-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .compact-contact-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-actions {
+                flex-direction: column;
+            }
+            
+            .timer-container {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 5px;
+                justify-content: flex-end;
+                width: 100%;
+            }
+            
+            .quiz-title-container {
+                width: 100%;
+            }
+            
+            .dmc-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .dmc-grades, .dmc-performance-bars {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .dmc-watermark {
+                font-size: 2rem;
+            }
+            
+            .signin-promo {
+                padding: 12px;
+            }
+            
+            .signin-promo h2 {
+                font-size: 0.8rem;
+            }
+            
+            .signin-promo p {
+                font-size: 0.55rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hamburger-menu" id="hamburger-menu" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="menu-overlay" id="menu-overlay" onclick="toggleMenu()"></div>
+
+    <div class="menu-container" id="menu-container">
+        <div class="menu-header">
+            <h2>PreMium Quizzes</h2>
+            <p>Select a quiz to begin</p>
+        </div>
+        <ul class="menu-list">
+            <li>
+                <a href="#" onclick="selectQuiz('PreMium-001BIO')">
+                    <i class="fas fa-flask"></i>
+                    <span>Biology Test - ID: 001BIO</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="selectQuiz('PreMium-002PHY')">
+                    <i class="fas fa-atom"></i>
+                    <span>Physics Test - ID: 002PHY</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="selectQuiz('PreMium-003CHE')">
+                    <i class="fas fa-vial"></i>
+                    <span>Chemistry Test - ID: 003CHE</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="selectQuiz('PreMium-004ENG')">
+                    <i class="fas fa-pen"></i>
+                    <span>English Test - ID: 004ENG</span>
+                </a>
+            </li>
+        </ul>
+        <div class="menu-contact">
+            <span>Get more quizzes from our official channels:</span>
+            <a href="https://whatsapp.com/channel/0029Vb75jW4GpLHLTohPYw0X" target="_blank" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                <span>Premium Passwords</span>
+            </a>
+            <a href="https://whatsapp.com/channel/0029Vb6eCBQH5JLpcdzE6v1l" target="_blank" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                <span>Quiz Links Channel</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="logo">
+            <h1>PreMium Testing Service</h1>
+            <p>Excellence in Educational Assessment</p>
+        </div>
+
+        <div id="signin-page" class="page active">
+            <div class="signin-promo">
+                <h2>Excel in Your MDCAT Journey</h2>
+                <p>Unlock your full potential and secure your future in medicine with our Premium Testing Service, specifically designed for MDCAT aspirants. We provide a superior, exam-like environment with a vast bank of curated, difficulty-graded questions that mirror the actual test pattern. Our intelligent performance analytics give you deep, insightful feedback on your strengths and weaknesses, allowing for targeted improvement and a smarter, more efficient study plan. Move beyond basic preparation and gain the competitive edge with detailed answer explanations, time management strategies, and personalized progress tracking. Don't just prepare; prepare to excel. Join our portal today and take the first confident step towards achieving your dream medical college admission.</p>
+            </div>
+            
+            <h2 style="font-size: 0.9rem; margin-bottom: 4px;">Secure Sign In</h2>
+            <p style="font-size: 0.7rem; margin-bottom: 8px;">Enter your password to access the testing portal</p>
+            
+            <div class="password-container">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" id="password" class="password-input" placeholder="Enter your password">
+            </div>
+            
+            <button class="btn btn-primary" onclick="checkPassword()">
+                <span>Sign In</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            
+            <div id="error-box" class="error-box">
+                Invalid password. Please try again.
+            </div>
+            
+            <div class="contact-buttons">
+                <a href="https://premium-testing-service.blogspot.com/?m=1" class="btn btn-contact">
+                    <i class="fas fa-globe"></i>
+                    <span>Blogger Website</span>
+                </a>
+                
+                <a href="mailto:hamadahmadbjr551@gmail.com" class="btn btn-contact">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact Email</span>
+                </a>
+                
+                <a href="tel:03000047325" class="btn btn-contact">
+                    <i class="fas fa-phone"></i>
+                    <span>Contact Number</span>
+                </a>
+                
+                <a href="https://whatsapp.com/channel/0029Vb6eCBQH5JLpcdzE6v1l" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Quiz Links Channel</span>
+                </a>
+                
+                <a href="https://whatsapp.com/channel/0029Vb75jW4GpLHLTohPYw0X" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Premium Quizzes Password</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="registration-page" class="page">
+            <h2 style="font-size: 0.9rem; margin-bottom: 4px;">Student Registration</h2>
+            <p style="font-size: 0.7rem; margin-bottom: 8px;">Please provide your details before starting the test</p>
+            
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="fullName" class="form-input" placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" id="email" class="form-input" placeholder="Enter your email address">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Mobile Number</label>
+                <input type="tel" id="mobile" class="form-input" placeholder="+92XXXXXXXXXX">
+            </div>
+            
+            <button class="btn btn-primary" onclick="validateForm()">
+                <span>Proceed to Test</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <div id="quiz-page" class="page">
+            <div class="quiz-header">
+                <div class="quiz-title-container">
+                    <h2 style="font-size: 0.85rem;">Biology Test - PreMium-001BIO</h2>
+                    <div class="quiz-info">
+                        <span>Subject: Biology</span>
+                        <span>Per MCQ: 1 Minute</span>
+                    </div>
+                </div>
+                <div class="timer-container">
+                    <div class="timer" id="timer">30:00</div>
+                    <div class="question-timer" id="question-timer">60</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="quiz-progress" style="width: 20%"></div>
+            </div>
+            
+            <div class="compact-contact-buttons">
+                <a href="https://premium-testing-service.blogspot.com/?m=1" class="btn btn-contact">
+                    <i class="fas fa-globe"></i>
+                    <span>Blog</span>
+                </a>
+                
+                <a href="mailto:hamadahmadbjr551@gmail.com" class="btn btn-contact">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </a>
+                
+                <a href="tel:03000047325" class="btn btn-contact">
+                    <i class="fas fa-phone"></i>
+                    <span>Call</span>
+                </a>
+                
+                <a href="https://whatsapp.com/channel/0029Vb6eCBQH5JLpcdzE6v1l" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Quiz Links</span>
+                </a>
+                
+                <a href="https://whatsapp.com/channel/0029Vb75jW4GpLHLTohPYw0X" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Premium Password</span>
+                </a>
+            </div>
+            
+            <div class="question-nav" id="question-nav">
+                </div>
+            
+            <div class="question-container">
+                <div class="question-text" id="question-text">
+                    </div>
+                
+                <div class="options-container" id="options-container">
+                    </div>
+                
+                <div class="reasoning" id="reasoning">
+                    <div class="reasoning-title">Explanation:</div>
+                    <div id="reasoning-text"></div>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="nav-btn btn-back" onclick="navigateQuestion('prev')">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="nav-btn btn-next" onclick="navigateQuestion('next')">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="nav-btn btn-skip" onclick="navigateQuestion('skip')">
+                    <i class="fas fa-forward"></i> Skip
+                </button>
+                <button class="nav-btn btn-reasoning" onclick="toggleReasoning()">
+                    <i class="fas fa-lightbulb"></i> Reasoning
+                </button>
+                <button class="nav-btn btn-out-of-syllabus" onclick="markOutOfSyllabus()">
+                    <i class="fas fa-ban"></i> Out of Syllabus
+                </button>
+                <button class="nav-btn btn-submit" onclick="submitTest()">
+                    Submit <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="results-page" class="page">
+            <div class="result-card">
+                <h2 style="font-size: 0.9rem;">Test Results</h2>
+                <div class="score-display" id="score-display">You obtained 85 marks out of 100</div>
+                <p style="font-size: 0.7rem;">in Test No PreMium-001BIO of PreMium Testing Service</p>
+            </div>
+            
+            <div class="dmc-report">
+                <div class="dmc-watermark">CERTIFICATE OF MERIT</div>
+                
+                <div class="dmc-header">
+                    <h2>PreMium Testing Service</h2>
+                    <p>Detailed Mark Certificate (DMC)</p>
+                </div>
+                
+                <div class="dmc-issuance">
+                    This certificate is issued on <span id="dmc-issue-date"></span> to
+                </div>
+                
+                <div class="dmc-content">
+                    <div class="dmc-section">
+                        <h3>Student Information</h3>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Name:</span>
+                            <span class="dmc-value" id="dmc-name">-</span>
+                        </div>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Email:</span>
+                            <span class="dmc-value" id="dmc-email">-</span>
+                        </div>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Mobile:</span>
+                            <span class="dmc-value" id="dmc-mobile">-</span>
+                        </div>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Test Date:</span>
+                            <span class="dmc-value" id="dmc-date">-</span>
+                        </div>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Test ID:</span>
+                            <span class="dmc-value">PreMium-001BIO</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dmc-section">
+                        <h3>Test Performance</h3>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Total Questions:</span>
+                            <span class="dmc-value" id="dmc-total">-</span>
+                        </div>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Correct Answers:</span>
+                            <span class="dmc-value" id="dmc-correct">-</span>
+                        </div>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Incorrect Answers:</span>
+                            <span class="dmc-value" id="dmc-incorrect">-</span>
+                        </div>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Unanswered:</span>
+                            <span class="dmc-value" id="dmc-unanswered">-</span>
+                        </div>
+                        <div class="dmc-row">
+                            <span class="dmc-label">Out of Syllabus:</span>
+                            <span class="dmc-value" id="dmc-oos">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dmc-performance">
+                    <h3>Performance Breakdown</h3>
+                    <div class="dmc-performance-bars">
+                        <div class="dmc-performance-item dmc-performance-correct">
+                            <div class="dmc-performance-value" id="dmc-perf-correct">-</div>
+                            <div class="dmc-performance-label">Correct</div>
+                        </div>
+                        <div class="dmc-performance-item dmc-performance-incorrect">
+                            <div class="dmc-performance-value" id="dmc-perf-incorrect">-</div>
+                            <div class="dmc-performance-label">Incorrect</div>
+                        </div>
+                        <div class="dmc-performance-item dmc-performance-unanswered">
+                            <div class="dmc-performance-value" id="dmc-perf-unanswered">-</div>
+                            <div class="dmc-performance-label">Unanswered</div>
+                        </div>
+                        <div class="dmc-performance-item dmc-performance-oos">
+                            <div class="dmc-performance-value" id="dmc-perf-oos">-</div>
+                            <div class="dmc-performance-label">Out of Syllabus</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dmc-grading">
+                    <h3>Performance Metrics</h3>
+                    <div class="dmc-grades">
+                        <div class="dmc-grade-item">
+                            <div class="dmc-grade-value" id="dmc-percentage">-</div>
+                            <div class="dmc-grade-label">Percentage</div>
+                        </div>
+                        <div class="dmc-grade-item">
+                            <div class="dmc-grade-value" id="dmc-accuracy">-</div>
+                            <div class="dmc-grade-label">Accuracy</div>
+                        </div>
+                        <div class="dmc-grade-item">
+                            <div class="dmc-grade-value" id="dmc-speed">-</div>
+                            <div class="dmc-grade-label">Q/Min</div>
+                        </div>
+                        <div class="dmc-grade-item">
+                            <div class="dmc-grade-value" id="dmc-rank">-</div>
+                            <div class="dmc-grade-label">Rank</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dmc-excellence" id="dmc-excellence">
+                    </div>
+                
+                <div class="dmc-footer">
+                    <p>This certificate is issued to <span id="dmc-student-fullname"></span> in recognition of their performance on the PreMium Testing Service assessment. The results presented here are a testament to the student's knowledge, preparation, and dedication to academic excellence.</p>
+                </div>
+            </div>
+            
+            <div class="result-actions">
+                <button class="btn btn-primary" onclick="restartTest()">
+                    <i class="fas fa-redo"></i> Retake Full Test
+                </button>
+                <button class="btn btn-primary" onclick="retakeIncorrect()">
+                    <i class="fas fa-bolt"></i> Retake Incorrect Questions
+                </button>
+                <button class="btn btn-primary" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print DMC Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample quiz data
+        const quizData = [
+            {
+                question: "Which organelle is responsible for cellular respiration?",
+                options: ["Nucleus", "Mitochondria", "Chloroplast", "Endoplasmic Reticulum"],
+                correctAnswer: 1,
+                reasoning: "Mitochondria are known as the powerhouses of the cell. They are responsible for cellular respiration, the process that generates ATP from nutrients.",
+                difficulty: "medium",
+                category: "Cell Biology"
+            },
+            {
+                question: "What is the basic unit of heredity?",
+                options: ["Cell", "Chromosome", "Gene", "Protein"],
+                correctAnswer: 2,
+                reasoning: "A gene is the basic physical and functional unit of heredity. Genes are made up of DNA and act as instructions to make molecules called proteins.",
+                difficulty: "easy",
+                category: "Genetics"
+            },
+            {
+                question: "Which blood type is known as the universal recipient?",
+                options: ["A", "B", "AB", "O"],
+                correctAnswer: 2,
+                reasoning: "AB positive blood type is known as the universal recipient because they can receive red blood cells from any other blood type.",
+                difficulty: "hard",
+                category: "Human Physiology"
+            },
+            {
+                question: "What is the primary function of the ribosomes?",
+                options: ["DNA replication", "Protein synthesis", "Cellular respiration", "Lipid production"],
+                correctAnswer: 1,
+                reasoning: "Ribosomes are the sites in a cell where proteins are synthesized. They read messenger RNA sequences and translate them into amino acid sequences.",
+                difficulty: "medium",
+                category: "Cell Biology"
+            },
+            {
+                question: "Which of these is not a type of RNA?",
+                options: ["Messenger RNA", "Transfer RNA", "Ribosomal RNA", "Helicase RNA"],
+                correctAnswer: 3,
+                reasoning: "Helicase is an enzyme that unwinds DNA, not a type of RNA. The three main types of RNA are messenger RNA (mRNA), transfer RNA (tRNA), and ribosomal RNA (rRNA).",
+                difficulty: "hard",
+                category: "Molecular Biology"
+            }
+        ];
+
+        // Application state
+        let currentPage = 'signin-page';
+        let currentQuizId = null;
+        let currentQuestion = 0;
+        let userAnswers = Array(quizData.length).fill(null);
+        let visitedQuestions = Array(quizData.length).fill(false);
+        let outOfSyllabusQuestions = Array(quizData.length).fill(false);
+        let timerInterval;
+        let questionTimerInterval;
+        let timeLeft = 1800; // 30 minutes in seconds
+        let questionTimeLeft = 60; // 60 seconds per question
+        let startTime = null;
+
+        // Initialize the application
+        function init() {
+            // Set up question navigation
+            const questionNav = document.getElementById('question-nav');
+            questionNav.innerHTML = '';
+            
+            quizData.forEach((_, index) => {
+                const navItem = document.createElement('div');
+                navItem.className = 'question-nav-item';
+                navItem.textContent = index + 1;
+                navItem.addEventListener('click', () => navigateToQuestion(index));
+                questionNav.appendChild(navItem);
+            });
+            
+            // Start with the first question
+            showQuestion(0);
+            
+            // Start the timers
+            startTimer();
+            startQuestionTimer();
+            
+            // Record start time
+            startTime = new Date();
+            
+            // Update progress bar
+            updateProgressBar();
+        }
+
+        // Toggles the hamburger menu's active state
+        function toggleMenu() {
+            const hamburger = document.getElementById('hamburger-menu');
+            const menu = document.getElementById('menu-container');
+            const overlay = document.getElementById('menu-overlay');
+
+            hamburger.classList.toggle('active-menu');
+            menu.classList.toggle('active-menu');
+            overlay.classList.toggle('active-menu');
+        }
+
+        // Handles quiz selection from the menu
+        function selectQuiz(quizId) {
+            currentQuizId = quizId;
+            showPage('signin-page');
+            toggleMenu(); // Close the menu after selection
+            document.getElementById('password').value = ''; // Clear previous password
+        }
+
+        // Password validation
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const errorBox = document.getElementById('error-box');
+            
+            if (password === 'Dev-PreMium-736') {
+                // Developer bypass
+                document.getElementById('fullName').value = 'Test Student';
+                document.getElementById('email').value = 'test.student@gmail.com';
+                document.getElementById('mobile').value = '+923001234567';
+                
+                localStorage.setItem('studentName', 'Test Student');
+                localStorage.setItem('studentEmail', 'test.student@gmail.com');
+                localStorage.setItem('studentMobile', '+923001234567');
+                
+                showPage('quiz-page');
+                init();
+                errorBox.style.display = 'none';
+            } else if (currentQuizId && password === currentQuizId) {
+                // Correct password for a specific quiz
+                showPage('registration-page');
+                errorBox.style.display = 'none';
+            } else {
+                errorBox.style.display = 'block';
+            }
+        }
+
+        // Form validation
+        function validateForm() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobile').value;
+            
+            if (!fullName || !email || !mobile) {
+                alert('All fields are required');
+                return;
+            }
+            
+            if (!email.endsWith('@gmail.com')) {
+                alert('Email must be a Gmail address');
+                return;
+            }
+            
+            if (!mobile.startsWith('+92') || mobile.length < 13) {
+                alert('Mobile number must start with +92 and be at least 13 characters long');
+                return;
+            }
+            
+            // Store student details
+            localStorage.setItem('studentName', fullName);
+            localStorage.setItem('studentEmail', email);
+            localStorage.setItem('studentMobile', mobile);
+            
+            showPage('quiz-page');
+            init();
+        }
+
+        // Navigation between pages
+        function showPage(pageId) {
+            const allPages = document.querySelectorAll('.page');
+            allPages.forEach(page => page.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progress}%`;
+        }
+
+        // Question navigation
+        function showQuestion(index) {
+            if (index < 0 || index >= quizData.length) return;
+            
+            currentQuestion = index;
+            visitedQuestions[index] = true;
+            
+            const question = quizData[index];
+            document.getElementById('question-text').textContent = `${index + 1}. ${question.question}`;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, optIndex) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                if (userAnswers[index] === optIndex) {
+                    optionElement.classList.add('selected');
+                    
+                    // Show correct/incorrect feedback
+                    const correctIndex = quizData[currentQuestion].correctAnswer;
+                    if (optIndex === correctIndex) {
+                        optionElement.classList.add('correct');
+                    } else {
+                        optionElement.classList.add('incorrect');
+                    }
+                }
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(optIndex));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update navigation items
+            updateQuestionNav();
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Hide reasoning by default
+            document.getElementById('reasoning').style.display = 'none';
+            
+            // Reset and start question timer
+            resetQuestionTimer();
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // Update UI to show selected option
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+            options[optionIndex].classList.add('selected');
+            
+            // Show correct/incorrect feedback
+            const correctIndex = quizData[currentQuestion].correctAnswer;
+            if (optionIndex === correctIndex) {
+                options[optionIndex].classList.add('correct');
+            } else {
+                options[optionIndex].classList.add('incorrect');
+                options[correctIndex].classList.add('correct');
+            }
+            
+            // Update navigation
+            updateQuestionNav();
+            
+            // Stop the question timer
+            clearInterval(questionTimerInterval);
+        }
+
+        function updateQuestionNav() {
+            const navItems = document.querySelectorAll('.question-nav-item');
+            navItems.forEach((item, index) => {
+                item.classList.remove('current', 'answered', 'visited', 'out-of-syllabus');
+                
+                if (index === currentQuestion) {
+                    item.classList.add('current');
+                } else if (outOfSyllabusQuestions[index]) {
+                    item.classList.add('out-of-syllabus');
+                } else if (userAnswers[index] !== null) {
+                    item.classList.add('answered');
+                } else if (visitedQuestions[index]) {
+                    item.classList.add('visited');
+                }
+            });
+        }
+
+        function navigateQuestion(direction) {
+            if (direction === 'next') {
+                showQuestion(currentQuestion + 1);
+            } else if (direction === 'prev') {
+                showQuestion(currentQuestion - 1);
+            } else if (direction === 'skip') {
+                userAnswers[currentQuestion] = null;
+                updateQuestionNav();
+                showQuestion(currentQuestion + 1);
+            }
+        }
+
+        function navigateToQuestion(index) {
+            showQuestion(index);
+        }
+
+        function toggleReasoning() {
+            const reasoningElement = document.getElementById('reasoning');
+            const isVisible = reasoningElement.style.display === 'block';
+            
+            if (isVisible) {
+                reasoningElement.style.display = 'none';
+            } else {
+                reasoningElement.style.display = 'block';
+                document.getElementById('reasoning-text').textContent = quizData[currentQuestion].reasoning;
+            }
+        }
+
+        function markOutOfSyllabus() {
+            outOfSyllabusQuestions[currentQuestion] = !outOfSyllabusQuestions[currentQuestion];
+            updateQuestionNav();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                    return;
+                }
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function startQuestionTimer() {
+            clearInterval(questionTimerInterval);
+            
+            questionTimerInterval = setInterval(() => {
+                questionTimeLeft--;
+                
+                if (questionTimeLeft <= 0) {
+                    clearInterval(questionTimerInterval);
+                    // Auto move to next question if time expires
+                    if (currentQuestion < quizData.length - 1) {
+                        showQuestion(currentQuestion + 1);
+                    }
+                    return;
+                }
+                
+                document.getElementById('question-timer').textContent = questionTimeLeft;
+            }, 1000);
+        }
+
+        function resetQuestionTimer() {
+            questionTimeLeft = 60;
+            document.getElementById('question-timer').textContent = questionTimeLeft;
+            startQuestionTimer();
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval);
+            clearInterval(questionTimerInterval);
+            
+            // Calculate total time spent
+            const totalTimeSpent = startTime ? Math.round((new Date() - startTime) / 1000) : 0;
+            
+            // Calculate score (excluding out-of-syllabus questions)
+            let correctCount = 0;
+            let totalCount = 0;
+            let outOfSyllabusCount = 0;
+            
+            userAnswers.forEach((answer, index) => {
+                if (outOfSyllabusQuestions[index]) {
+                    outOfSyllabusCount++;
+                    return;
+                }
+                
+                totalCount++;
+                if (answer === quizData[index].correctAnswer) {
+                    correctCount++;
+                }
+            });
+            
+            const incorrectCount = userAnswers.filter((answer, index) => 
+                !outOfSyllabusQuestions[index] && answer !== null && answer !== quizData[index].correctAnswer
+            ).length;
+            
+            const unansweredCount = userAnswers.filter((answer, index) => 
+                !outOfSyllabusQuestions[index] && answer === null
+            ).length;
+            
+            const percentageScore = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+            
+            // Calculate accuracy
+            const accuracy = totalCount > 0 ? Math.round((correctCount / (correctCount + incorrectCount)) * 100) : 0;
+            
+            // Calculate speed (questions per minute)
+            const speed = totalTimeSpent > 0 ? (totalCount / (totalTimeSpent / 60)).toFixed(1) : 0;
+            
+            // Calculate rank (simulated)
+            const rank = percentageScore >= 90 ? "Top 5%" : 
+                        percentageScore >= 80 ? "Top 15%" :
+                        percentageScore >= 70 ? "Top 30%" :
+                        percentageScore >= 60 ? "Top 50%" : "Below 50%";
+            
+            // Update results page
+            document.getElementById('score-display').textContent = `You obtained ${correctCount}/${totalCount} marks`;
+            
+            // Update DMC report
+            const studentName = localStorage.getItem('studentName');
+            document.getElementById('dmc-name').textContent = studentName;
+            document.getElementById('dmc-email').textContent = localStorage.getItem('studentEmail');
+            document.getElementById('dmc-mobile').textContent = localStorage.getItem('studentMobile');
+            
+            const issueDate = new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            document.getElementById('dmc-date').textContent = issueDate;
+            document.getElementById('dmc-issue-date').textContent = issueDate;
+            document.getElementById('dmc-student-fullname').textContent = studentName;
+            
+            document.getElementById('dmc-total').textContent = totalCount;
+            document.getElementById('dmc-correct').textContent = correctCount;
+            document.getElementById('dmc-incorrect').textContent = incorrectCount;
+            document.getElementById('dmc-unanswered').textContent = unansweredCount;
+            document.getElementById('dmc-oos').textContent = outOfSyllabusCount;
+            
+            document.getElementById('dmc-perf-correct').textContent = correctCount;
+            document.getElementById('dmc-perf-incorrect').textContent = incorrectCount;
+            document.getElementById('dmc-perf-unanswered').textContent = unansweredCount;
+            document.getElementById('dmc-perf-oos').textContent = outOfSyllabusCount;
+            
+            document.getElementById('dmc-percentage').textContent = `${percentageScore}%`;
+            document.getElementById('dmc-accuracy').textContent = `${accuracy}%`;
+            document.getElementById('dmc-speed').textContent = speed;
+            document.getElementById('dmc-rank').textContent = rank;
+            
+            // Add excellence message if score is high
+            const excellenceElement = document.getElementById('dmc-excellence');
+            if (percentageScore >= 90) {
+                excellenceElement.innerHTML = '<p>Exceptional Performance! This outstanding result demonstrates excellent mastery of the subject matter and places you in the top percentile of performers.</p>';
+                excellenceElement.style.display = 'block';
+            } else if (percentageScore >= 80) {
+                excellenceElement.innerHTML = '<p>Excellent Performance! Your strong result reflects thorough preparation and a solid understanding of the subject material.</p>';
+                excellenceElement.style.display = 'block';
+            } else if (percentageScore >= 70) {
+                excellenceElement.innerHTML = '<p>Good Performance! You have demonstrated a good grasp of the subject with room for further improvement.</p>';
+                excellenceElement.style.display = 'block';
+            } else {
+                excellenceElement.style.display = 'none';
+            }
+            
+            showPage('results-page');
+        }
+
+        function restartTest() {
+            if (confirm('Are you sure you want to restart the test? All your progress will be lost.')) {
+                // Reset state
+                currentQuestion = 0;
+                userAnswers = Array(quizData.length).fill(null);
+                visitedQuestions = Array(quizData.length).fill(false);
+                outOfSyllabusQuestions = Array(quizData.length).fill(false);
+                timeLeft = 1800;
+                questionTimeLeft = 60;
+                
+                showPage('quiz-page');
+                init();
+            }
+        }
+
+        function retakeIncorrect() {
+            // Create a new quiz with only incorrect questions
+            const incorrectQuestions = [];
+            
+            quizData.forEach((question, index) => {
+                if (!outOfSyllabusQuestions[index] && 
+                    userAnswers[index] !== null && 
+                    userAnswers[index] !== question.correctAnswer) {
+                    incorrectQuestions.push(question);
+                }
+            });
+            
+            if (incorrectQuestions.length === 0) {
+                alert('You have no incorrect questions to retake!');
+                return;
+            }
+            
+            // Reset state for retake
+            currentQuestion = 0;
+            userAnswers = Array(incorrectQuestions.length).fill(null);
+            visitedQuestions = Array(incorrectQuestions.length).fill(false);
+            outOfSyllabusQuestions = Array(incorrectQuestions.length).fill(false);
+            timeLeft = Math.floor(1800 * (incorrectQuestions.length / quizData.length));
+            questionTimeLeft = 60;
+            
+            // Replace quiz data with incorrect questions only
+            quizData.splice(0, quizData.length, ...incorrectQuestions);
+            
+            showPage('quiz-page');
+            init();
+        }
+    </script>
+</body>
+</html>
